@@ -6,6 +6,10 @@
 class mycompany_webserver
 {
 
+	package { ['zstd']:
+	  ensure => installed,
+	}
+
 	# call apache class
  	# class { 'apache': }
 
