@@ -37,8 +37,6 @@ class mycompany_webserver
 
 	# https://ask.puppet.com/question/25819/how-to-install-pip-packages/
 	# https://puppet.com/docs/puppet/latest/types/package.html#package-provider-pip3
-	# BUG: https://stackoverflow.com/questions/44439763/puppet-installing-pip-rather-than-pip3-packages-using-the-pip3-provider-only-on
-	# - https://tickets.puppetlabs.com/browse/PUP-7644
 
 	# package { 'zstandard':
 	#   ensure   => '0.11.1',
@@ -49,17 +47,19 @@ class mycompany_webserver
 	package { 'zstandard@2':
 	  name => 'zstandard',
 	  ensure   => '0.11.1',
-	  # require  => Package['python-pip', 'python-devel', 'openssl-devel', 'libffi-devel'],
 	  provider => 'pip',
+	  # require  => Package['python-pip', 'python-devel', 'openssl-devel', 'libffi-devel'],
 	}
 
 
-
+	# BUG: https://stackoverflow.com/questions/44439763/puppet-installing-pip-rather-than-pip3-packages-using-the-pip3-provider-only-on
+	# - https://tickets.puppetlabs.com/browse/PUP-7644
+	#   - requires two runs to install... switch to exec?
 	package { 'zstandard@3':
 	  ensure   => installed,
-	  # require  => Package['pip', 'python-devel', 'openssl-devel', 'libffi-devel'],
 	  name     => 'zstandard~=0.11.1',
 	  provider => 'pip3',
+	  # require  => Package['pip', 'python-devel', 'openssl-devel', 'libffi-devel'],
 	}
 
 
