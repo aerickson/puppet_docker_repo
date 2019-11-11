@@ -28,7 +28,6 @@ class mycompany_webserver
 	  require  => Package['python-pip'],
 	}
 
-
 	# BUG: on Puppet < 6, this requires two runs to install 
 	# https://tickets.puppetlabs.com/browse/PUP-7644
 	package { 'zstandard@3':
