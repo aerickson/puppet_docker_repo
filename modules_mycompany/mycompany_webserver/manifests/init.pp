@@ -10,9 +10,6 @@ class mycompany_webserver
 	  ensure => installed,
 	}
 
-	# call apache class
- 	# class { 'apache': }
-
  	package { ['python3-pip']:
       ensure => installed,
  	}
@@ -21,46 +18,24 @@ class mycompany_webserver
 	  ensure => installed,
 	}
 
-	# package { 'pip':
-	#   require  => Package['python-pip'],
-	#   ensure   => latest,
-	#   provider => 'pip',
-	# }
-
-	# package { ['python-devel', 'openssl-devel', 'libffi-devel']:
-	#   ensure => installed,
-	# }
-
-	# need 
-	#
-    # export LC_ALL=C
-
-	# https://ask.puppet.com/question/25819/how-to-install-pip-packages/
-	# https://puppet.com/docs/puppet/latest/types/package.html#package-provider-pip3
-
-	# package { 'zstandard':
-	#   ensure   => '0.11.1',
-	#   # require  => Package['python-pip', 'python-devel', 'openssl-devel', 'libffi-devel'],
-	#   package => pip3
-	# }
+	# to run pip/pip3 need to run:
+    #   export LC_ALL=C
 
 	package { 'zstandard@2':
 	  name => 'zstandard',
 	  ensure   => '0.11.1',
 	  provider => 'pip',
-	  # require  => Package['python-pip', 'python-devel', 'openssl-devel', 'libffi-devel'],
+	  require  => Package['python-pip'],
 	}
 
 
-	# BUG: https://stackoverflow.com/questions/44439763/puppet-installing-pip-rather-than-pip3-packages-using-the-pip3-provider-only-on
-	# - https://tickets.puppetlabs.com/browse/PUP-7644
-	#   - requires two runs to install... switch to exec?
+	# BUG: on Puppet < 6, this requires two runs to install 
+	# https://tickets.puppetlabs.com/browse/PUP-7644
 	package { 'zstandard@3':
-	  ensure   => installed,
-	  name     => 'zstandard~=0.11.1',
+	  name     => 'zstandard',
+	  ensure   => '0.11.1',
 	  provider => 'pip3',
-	  # require  => Package['pip', 'python-devel', 'openssl-devel', 'libffi-devel'],
+	  require  => Package['python3-pip'],
 	}
-
 
 }
