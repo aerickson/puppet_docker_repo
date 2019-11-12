@@ -6,35 +6,36 @@
 class mycompany_webserver
 {
 
-	package { ['zstd']:
-	  ensure => installed,
-	}
+    package { 'zstd':
+        ensure => installed,
+    }
 
- 	package { ['python3-pip']:
-      ensure => installed,
- 	}
+    package { 'python3-pip':
+        ensure => installed,
+    }
 
-	package { ['python-pip']:
-	  ensure => installed,
-	}
+    package { 'python-pip':
+        ensure => installed,
+    }
 
-	# to run pip/pip3 need to run:
-    #   export LC_ALL=C
+    # BUG: on Puppet < 5, naming collision issue:
+    #  https://projects.puppetlabs.com/issues/1398
+    #  - can't use package to install zstandard for pip and pip3
 
-	package { 'zstandard@2':
-	  name => 'zstandard',
-	  ensure   => '0.11.1',
-	  provider => 'pip',
-	  require  => Package['python-pip'],
-	}
+    # BUG: on Puppet < 6, this requires two runs to install
+    # https://tickets.puppetlabs.com/browse/PUP-7644
+    package { 'zstandard-py2':
+        ensure   => '0.11.1',
+        name     => 'zstandard',
+        provider => 'pip',
+        require  => Package['python-pip'],
+    }
 
-	# BUG: on Puppet < 6, this requires two runs to install 
-	# https://tickets.puppetlabs.com/browse/PUP-7644
-	package { 'zstandard@3':
-	  name     => 'zstandard',
-	  ensure   => '0.11.1',
-	  provider => 'pip3',
-	  require  => Package['python3-pip'],
-	}
-
+    package { 'zstandard-py3':
+        ensure   => '0.11.1',
+        name     => 'zstandard',
+        provider => 'pip3',
+        require  => Package['python3-pip'],
+    }
+    
 }
