@@ -9,10 +9,15 @@ provisioner:
   manifests_path:  manifests
   modules_path: modules_mycompany
   hiera_data_path: hieradata
+  #
   # puppet_apt_repo: http://apt.puppetlabs.com/ puppetlabs-release-xenial.deb
   # puppet_apt_collections_repo: http://apt.puppetlabs.com/ puppet5-release-xenial.deb
-  require_puppet_omnibus: true
-  puppet_omnibus_url: 'https://raw.githubusercontent.com/petems/puppet-install-shell/master/install_puppet_6_agent.sh'
+  # 
+  # works for puppet 6
+  # require_puppet_omnibus: true
+  # puppet_omnibus_url: 'https://raw.githubusercontent.com/petems/puppet-install-shell/master/install_puppet_6_agent.sh'
+  #
+  # puppet_version: '3.8.5-1puppetlabs1'
   require_puppet_repo: true
   require_chef_for_busser: false
   librarian_puppet_ssl_file: 'C:/repository/puppet_repo/cacert.pem'
